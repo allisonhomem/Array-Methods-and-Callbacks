@@ -33,35 +33,35 @@ console.log(awayTeam);
 
 //(c) Home Team goals for 2014 world cup final
 
-const homeGoals = twentyFourteenFinal.map((item) => {
-    return item['Home Team Goals'];
-});
+// const homeGoals = twentyFourteenFinal.map((item) => {
+//     return item['Home Team Goals'];
+// });
 
-console.log(homeGoals);
+// console.log(homeGoals);
 
 //(d) Away Team goals for 2014 world cup final
 
-const awayGoals = twentyFourteenFinal.map((item) => {
-    return item['Away Team Goals'];
-});
+// const awayGoals = twentyFourteenFinal.map((item) => {
+//     return item['Away Team Goals'];
+// });
 
-console.log(awayGoals);
+// console.log(awayGoals);
 
 //(e) Winner of 2014 world cup final */
 
-const fifaFourteenChampion = () => {
-    if(homeGoals > awayGoals) {
-        return `The Winner of the 2014 World Cup is ${homeTeam}`;
-    }
-    else if(awayGoals < homeGoals) {
-        return `The Winner of the 2014 World Cup is ${awayTeam}`;
-    }
-    else {
-        return `The game was a tie!`;
-    };
-};
+// const fifaFourteenChampion = () => {
+//     if(homeGoals > awayGoals) {
+//         return `The Winner of the 2014 World Cup is ${homeTeam}`;
+//     }
+//     else if(awayGoals < homeGoals) {
+//         return `The Winner of the 2014 World Cup is ${awayTeam}`;
+//     }
+//     else {
+//         return `The game was a tie!`;
+//     };
+// };
 
-console.log(fifaFourteenChampion());
+// console.log(fifaFourteenChampion());
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -73,12 +73,13 @@ hint - you should be looking at the stage key inside of the objects
 */
 
 function getFinals(array) {
-   const newarray = array.filter((item) => {
+   const finalGames = array.filter((item) => {
        return item.Stage === `Final`;
    });
-   return newarray;
+   return finalGames;
 };
 
+console.log(getFinals(fifaData));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 3: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher-order function called getYears to do the following: 
@@ -100,11 +101,31 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
-}
+function getWinners(array) {
+    const winners = [];
+    const homeGoals = getFinals(array).map((item) => {
+            return item["Home Team Goals"];
+        });
+    const awayGoals = getFinals(array).map((item) => {
+            return item["Away Team Goals"];
+        });
 
+    for(let i=0; i < getFinals(array).length; i++){
+        if(homeGoals[i] > awayGoals[i]){
+            winners.push(getFinals(array)[i]["Home Team Name"]);
+        }
+        else if(awayGoals[i] > homeGoals[i]){
+            winners.push(getFinals(array)[i]["Away Team Name"]);
+        }
+        else if(homeGoals[i] === awayGoals[i]){
+            winners.push(getFinals(array)[i]["Win conditions"].split(` `,1));
+        };
+    };
+    
+    return winners;
+};
 
+console.log(getWinners(fifaData));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
