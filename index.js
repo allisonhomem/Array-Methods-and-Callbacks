@@ -94,6 +94,7 @@ function getYears(array) {
     return years;
 };
 
+
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher-order function getWinners to do the following:  
 1. Receives an array
@@ -114,12 +115,15 @@ function getWinners(array) {
         if(homeGoals[i] > awayGoals[i]){
             winners.push(getFinals(array)[i]["Home Team Name"]);
         }
-        else if(awayGoals[i] > homeGoals[i]){
+        else {
             winners.push(getFinals(array)[i]["Away Team Name"]);
         }
-        else if(homeGoals[i] === awayGoals[i]){
-            winners.push(getFinals(array)[i]["Win conditions"].split(` `,1));
-        };
+        // else if(awayGoals[i] > homeGoals[i]){
+        //     winners.push(getFinals(array)[i]["Away Team Name"]);
+        // }
+        // else if(homeGoals[i] === awayGoals[i]){
+        //     winners.push(getFinals(array)[i]["Win conditions"].split(` `,1).toString());
+        // };
     };
     
     return winners;
@@ -137,11 +141,17 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
-}
+function getWinnersByYear(array) {
+    const winAnnouncement = [];
 
+    for(let i=0; i < getFinals(array).length; i++){
+        winAnnouncement.push(`In ${getYears(array)[i]}, ${getWinners(array)[i]} won the world cup!`)
+    };
 
+    return winAnnouncement;
+};
+
+console.log(getWinnersByYear(fifaData));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -153,11 +163,17 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
-}
+function getAverageGoals(cb) {
+    const totalGameGoals = cb.map((item) => {
+        return item["Home Team Goals"] + item["Away Team Goals"];
+    });
+    const sumGoals = totalGameGoals.reduce((sum, item) => {
+        return sum + item;
+    },0);
+    return (sumGoals/totalGameGoals.length).toPrecision(3);
+};
 
-
+console.log(getAverageGoals(getFinals(fifaData)));
 
 
 /// 🥅 STRETCH 🥅 ///
